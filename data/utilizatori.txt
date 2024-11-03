@@ -1,0 +1,10 @@
+1;Ionut;Ion
+2;marcel;vasile
+3;gigel;ion
+4;prenume;name
+5;ion;vasile
+6;vasile;eu
+8;ksfjhalkfjnalkc;asljdla
+9;fsljahfilas;gljegkje
+10;octavian;naghi
+11;lasfgaljsldja;asfnaknjf
