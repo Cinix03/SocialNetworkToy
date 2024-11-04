@@ -18,8 +18,6 @@ public class UtilizatorValidator implements Validator<Utilizator> {
 
         // Creăm un pattern din regex
         Pattern pattern = Pattern.compile(regex);
-        // Citim input-ul de la utilizator
-        Scanner scanner = new Scanner(System.in);
         if(!pattern.matcher(entity.getFirstName()).matches())
             throw new InvalidUserException("Numele nu este valid");
         if(!pattern.matcher(entity.getLastName()).matches())

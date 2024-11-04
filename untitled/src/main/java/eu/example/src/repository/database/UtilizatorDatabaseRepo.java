@@ -29,10 +29,9 @@ public class UtilizatorDatabaseRepo extends AbstractDatabaseRepository<Long, Uti
     }
 
     @Override
-    public PreparedStatement prepareStatementForEntity(Utilizator entity, PreparedStatement preparedStatement) throws SQLException {
+    public void prepareStatementForEntity(Utilizator entity, PreparedStatement preparedStatement) throws SQLException {
         preparedStatement.setObject(1, entity.getFirstName());
         preparedStatement.setObject(2, entity.getLastName());
-        return preparedStatement;
     }
 
     @Override
@@ -57,6 +56,6 @@ public class UtilizatorDatabaseRepo extends AbstractDatabaseRepository<Long, Uti
 
     @Override
     protected int getUpdateParameterCount() {
-        return 2; // id, first_name, last_name
+        return 2; // first_name, last_name
     }
 }

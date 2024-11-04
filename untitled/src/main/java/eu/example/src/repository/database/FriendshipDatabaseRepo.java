@@ -28,10 +28,9 @@ public class FriendshipDatabaseRepo extends AbstractDatabaseRepository<Tuple<Lon
     }
 
     @Override
-    public PreparedStatement prepareStatementForEntity(Friendship entity, PreparedStatement preparedStatement) throws SQLException {
+    public void prepareStatementForEntity(Friendship entity, PreparedStatement preparedStatement) throws SQLException {
         preparedStatement.setObject(1, entity.getId().getFirst());
         preparedStatement.setObject(2, entity.getId().getSecond());
-        return preparedStatement;
     }
 
     @Override

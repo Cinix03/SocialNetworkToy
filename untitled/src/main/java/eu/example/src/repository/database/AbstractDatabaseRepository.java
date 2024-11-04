@@ -28,7 +28,7 @@ public abstract class AbstractDatabaseRepository<ID, E extends Entity<ID>> exten
     private void initialize() {
         try {
             connection = DriverManager.getConnection(url, username, password);
-            loadData(); // Optional: load initial data from the database
+            loadData();
         } catch (SQLException e) {
             throw new RuntimeException("Could not connect to the database", e);
         }
@@ -41,7 +41,7 @@ public abstract class AbstractDatabaseRepository<ID, E extends Entity<ID>> exten
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 E entity = createEntity(resultSet);
-                super.save(entity); // Also save in memory
+                super.save(entity);
             }
         } catch (SQLException e) {
             throw new RuntimeException("Could not load data from the database", e);
@@ -52,7 +52,7 @@ public abstract class AbstractDatabaseRepository<ID, E extends Entity<ID>> exten
 
     public abstract E createEntity(ResultSet resultSet) throws SQLException;
 
-    public abstract PreparedStatement prepareStatementForEntity(E entity, PreparedStatement preparedStatement) throws SQLException;
+    public abstract void prepareStatementForEntity(E entity, PreparedStatement preparedStatement) throws SQLException;
 
     @Override
     public Optional<E> save(E entity) {
@@ -101,8 +101,7 @@ public abstract class AbstractDatabaseRepository<ID, E extends Entity<ID>> exten
     }
 
     @Override
-    public Optional<E> delete(ID id) {;
-        System.out.println(id);
+    public Optional<E> delete(ID id) {
         Optional<E> entity = super.delete(id);
         if (entity.isPresent()) {
             try {

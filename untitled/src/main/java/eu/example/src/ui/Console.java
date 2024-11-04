@@ -23,7 +23,25 @@ public class Console {
     public void run() {
         Scanner scanner = new Scanner(System.in);
         String command;
-        System.out.println("Bine ai venit la aplicația de gestionare a utilizatorilor și prietenilor!");
+        // Codurile ANSI pentru culori
+        String verde = "\u001B[32m";
+        String reset = "\u001B[0m";
+        String rosu = "\u001B[31m";
+
+        // Textul pe care vrei să-l centrezi
+        String mesaj = "------------------Social Network App------------------";
+
+        // Lățimea aproximativă a terminalului
+        int latimeTerminal = 150;
+
+        // Calculează numărul de spații pentru centrarea textului
+        int spatiiNecesare = (latimeTerminal - mesaj.length()) / 2;
+
+        // Generează spațiile pentru a centra textul
+        String spatii = " ".repeat(Math.max(0, spatiiNecesare));
+
+        // Afișează textul centrat
+        System.out.println(verde + spatii + mesaj + reset);
 
         do {
             System.out.println("Introduceti comanda (add_user, delete_user, list_users, add_friendship, delete_friendship, list_friendships, how_many_com, most_sociable, friends_of_user, exit): ");
@@ -38,7 +56,7 @@ public class Console {
                         String lastName = scanner.nextLine();
                         Utilizator utilizator = new Utilizator(firstName, lastName);
                         utilizatorService.add(utilizator);
-                        System.out.println("Utilizator adăugat cu succes!");
+                        System.out.println(verde+"Utilizator adăugat cu succes!"+reset);
                     } catch (ValidationException e) {
                         System.out.println("Eroare: " + e.getMessage());
                     }
@@ -49,13 +67,11 @@ public class Console {
                     try {
                         Long idToDelete = Long.parseLong(scanner.nextLine());
                         Utilizator utilizator = new Utilizator("fsafa", "Afsaf");
-                        System.out.println(idToDelete);
                         utilizator.setId(idToDelete);
-                        System.out.println(utilizator.getId());
                         utilizatorService.delete(utilizator);
-                        System.out.println("Utilizator șters cu succes!");
+                        System.out.println(verde+"Utilizator șters cu succes!"+reset);
                     } catch (ValidationException e) {
-                        System.out.println("Eroare: " + e.getMessage());
+                        System.out.println(rosu+"Eroare: " + e.getMessage()+reset);
                     }
                     break;
 
@@ -67,7 +83,7 @@ public class Console {
                             System.out.println(Utilizator1);
                         });
                     }catch (Exception e){
-                        System.out.println(e.getMessage());
+                        System.out.println(rosu+e.getMessage()+reset);
                     }
                     break;
 
@@ -80,10 +96,10 @@ public class Console {
 
                         Friendship friendship = new Friendship(userId1, userId2);
                         friendshipService.add(friendship);
-                        System.out.println("Prietenie adăugată cu succes!");
+                        System.out.println(verde+"Prietenie adăugată cu succes!"+reset);
                     }
                     catch (Exception e) {
-                        System.out.println(e.getMessage());
+                        System.out.println(rosu+e.getMessage()+reset);
                     }
                     break;
 
@@ -95,9 +111,9 @@ public class Console {
                         Long delUserId2 = Long.parseLong(scanner.nextLine());
                         Friendship friendshipTuple = new Friendship(delUserId1, delUserId2);
                         friendshipService.delete(friendshipTuple);
-                        System.out.println("Prietenie ștearsă cu succes!");
+                        System.out.println(verde+"Prietenie ștearsă cu succes!"+reset);
                     } catch (ValidationException e) {
-                        System.out.println("Eroare: " + e.getMessage());
+                        System.out.println(rosu+"Eroare: " + e.getMessage()+reset);
                     }
                     break;
 
@@ -108,7 +124,7 @@ public class Console {
                             System.out.println(friendship);
                         });
                     }catch (Exception e){
-                        System.out.println(e.getMessage());
+                        System.out.println(rosu+e.getMessage()+reset);
                     }
                     break;
 
@@ -117,7 +133,7 @@ public class Console {
                         System.out.println(friendshipService.nrComunitati((int) StreamSupport.stream(utilizatorService.findAll().spliterator(), false).count(), utilizatorService.findAll()));
                     }
                     catch (Exception e){
-                        System.out.println(e.getMessage());
+                        System.out.println(rosu+e.getMessage()+reset);
                     }
                     break;
 
@@ -125,7 +141,7 @@ public class Console {
                     try {
                         System.out.println(friendshipService.ceiMaiprietenosi((int) StreamSupport.stream(utilizatorService.findAll().spliterator(), false).count(), utilizatorService.findAll()));
                     }catch (Exception e){
-                        System.out.println(e.getMessage() + "Eroare la service friendship/graph!");
+                        System.out.println(rosu+e.getMessage() + "Eroare la service friendship/graph!"+reset);
                     }
                     break;
 
@@ -156,7 +172,7 @@ public class Console {
                         });
 
                     }catch (Exception e){
-                        System.out.println(e.getMessage());
+                        System.out.println(rosu+e.getMessage()+reset);
                     }
                     break;
                 }

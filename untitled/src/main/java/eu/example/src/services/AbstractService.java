@@ -23,7 +23,6 @@ public abstract class AbstractService<ID, E extends Entity<ID>> implements Servi
             throw new ValidationException("Invalid type");
         try {
             validator.validate((E) entity);
-            System.out.println(1);
             repo.save((E) entity);
         } catch (Exception e) {
             throw new ValidationException(e.getMessage());
@@ -37,7 +36,6 @@ public abstract class AbstractService<ID, E extends Entity<ID>> implements Servi
             throw new ValidationException("Invalid type");
         try {
             validator.validate((E) o);
-            System.out.println(((E)(o)).getId());
             repo.delete(((E)o).getId());
         } catch (Exception e) {
             throw new ValidationException(e.getMessage());
