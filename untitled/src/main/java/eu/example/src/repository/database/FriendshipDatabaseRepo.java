@@ -7,6 +7,7 @@ import eu.example.src.domain.Tuple;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Optional;
 
 public class FriendshipDatabaseRepo extends AbstractDatabaseRepository<Tuple<Long, Long>, Friendship> {
     public FriendshipDatabaseRepo(Validator<Friendship> validator, String url, String username, String password) {
@@ -31,6 +32,10 @@ public class FriendshipDatabaseRepo extends AbstractDatabaseRepository<Tuple<Lon
     public void prepareStatementForEntity(Friendship entity, PreparedStatement preparedStatement) throws SQLException {
         preparedStatement.setObject(1, entity.getId().getFirst());
         preparedStatement.setObject(2, entity.getId().getSecond());
+    }
+    @Override
+    public String getClassType() {
+        return "Friendship";
     }
 
     @Override
@@ -57,4 +62,5 @@ public class FriendshipDatabaseRepo extends AbstractDatabaseRepository<Tuple<Lon
     protected int getUpdateParameterCount() {
         return 2;
     }
+
 }

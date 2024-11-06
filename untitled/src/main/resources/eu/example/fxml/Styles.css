@@ -1,0 +1,47 @@
+/* styles.css */
+
+/* Stil pentru întreaga fereastră */
+AnchorPane {
+    -fx-background-image: url("7555.jpg");
+    -fx-background-size: cover; /* Acoperă întreaga zonă */
+    -fx-background-position: left; /* Poziționează imaginea la stânga și la mijloc pe verticală */
+}
+
+
+/* Stil pentru TextField */
+.text-field {
+    -fx-background-color: #ffffff; /* Fundal alb pentru câmpurile de text */
+    -fx-border-color: #ccc; /* Bordură gri deschis */
+    -fx-border-radius: 5; /* Colțuri rotunjite */
+    -fx-padding: 5; /* Spațiu intern */
+    -fx-font-size: 14px; /* Dimensiune text */
+}
+
+/* Stil pentru PasswordField */
+.password-field {
+    -fx-background-color: #ffffff; /* Fundal alb pentru câmpurile de parolă */
+    -fx-border-color: #ccc; /* Bordură gri deschis */
+    -fx-border-radius: 5; /* Colțuri rotunjite */
+    -fx-padding: 5; /* Spațiu intern */
+    -fx-font-size: 14px; /* Dimensiune text */
+}
+
+/* Stil pentru Button */
+.button {
+    -fx-background-color: #2299c7; /* Culoare verde pentru buton */
+    -fx-text-fill: white; /* Text alb */
+    -fx-font-size: 16px; /* Dimensiune text */
+    -fx-border-radius: 5; /* Colțuri rotunjite */
+    -fx-padding: 10; /* Spațiu intern */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.0, 0, 1); /* Umbră pentru efect vizual */
+}
+
+/* Stil pentru buton la hover */
+.button:hover {
+    -fx-background-color: #0e5091; /* Ton mai închis de verde la hover */
+}
+
+/* Stil pentru promptText */
+.text-field .prompt-text {
+    -fx-text-fill: #aaa; /* Culoare gri deschis pentru textul de prompt */
+}

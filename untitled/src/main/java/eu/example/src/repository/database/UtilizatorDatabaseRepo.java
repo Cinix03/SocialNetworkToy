@@ -14,13 +14,16 @@ public class UtilizatorDatabaseRepo extends AbstractDatabaseRepository<Long, Uti
     }
 
 
+
     @Override
     public Utilizator createEntity(ResultSet resultSet) throws SQLException {
         try {
             Long id = resultSet.getLong("id");
             String firstName = resultSet.getString("first_name");
             String lastName = resultSet.getString("last_name");
-            Utilizator utilizator = new Utilizator(firstName, lastName);
+            String usernameUser = resultSet.getString("username");
+            String passwordUser = resultSet.getString("password");
+            Utilizator utilizator = new Utilizator(firstName, lastName, usernameUser, passwordUser);
             utilizator.setId(id);
             return utilizator;
         } catch (SQLException e) {
@@ -29,9 +32,16 @@ public class UtilizatorDatabaseRepo extends AbstractDatabaseRepository<Long, Uti
     }
 
     @Override
+    public String getClassType() {
+        return "Utilizator";
+    }
+
+    @Override
     public void prepareStatementForEntity(Utilizator entity, PreparedStatement preparedStatement) throws SQLException {
         preparedStatement.setObject(1, entity.getFirstName());
         preparedStatement.setObject(2, entity.getLastName());
+        preparedStatement.setObject(3, entity.getUsername());
+        preparedStatement.setObject(4, entity.getPassword());
     }
 
     @Override
@@ -41,21 +51,21 @@ public class UtilizatorDatabaseRepo extends AbstractDatabaseRepository<Long, Uti
 
     @Override
     protected String getColumns() {
-        return "first_name, last_name";
+        return "first_name, last_name, username, password";
     }
 
     @Override
     protected String getPlaceholder() {
-        return "?, ?";
+        return "?, ?, ?, ?";
     }
 
     @Override
     protected String getUpdateSetClause() {
-        return "first_name = ?, last_name = ?";
+        return "first_name = ?, last_name = ?, username = ?, password = ?";
     }
 
     @Override
     protected int getUpdateParameterCount() {
-        return 2; // first_name, last_name
+        return 4; // first_name, last_name
     }
 }

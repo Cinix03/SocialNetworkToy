@@ -15,6 +15,14 @@ public class UtilizatorService extends AbstractService<Long, Utilizator> {
         super(repo, validator);
     }
 
+    public Utilizator findByUsername(String username){
+        for(Utilizator u:repo.findAll()){
+            if(u.getUsername().equals(username))
+                return u;
+        }
+        throw new IllegalArgumentException("Utilizatorul nu exista");
+    }
+
 
     public ArrayList<Utilizator> getFriends(Utilizator u){
         validator.validate(u);

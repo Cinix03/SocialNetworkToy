@@ -16,7 +16,7 @@ public class UtilizatorRepository extends AbstractFileRepository<Long, Utilizato
     @Override
     public Utilizator createEntity(String line) {
         String[] splited = line.split(";");
-        Utilizator u = new Utilizator(splited[1], splited[2]);
+        Utilizator u = new Utilizator(splited[1], splited[2], splited[3], splited[4]);
         if(currentId!=null)
             currentId = Math.max(currentId, Long.parseLong(splited[0])+1);
         else

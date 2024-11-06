@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.*?>
+
+<?import javafx.scene.chart.BubbleChart?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="eu.example.src.controller.LoginController"
+            stylesheets="@/eu/example/fxml/Styles.css"
+            prefHeight="1000.0" prefWidth="1000.0">
+
+    <VBox alignment="CENTER" spacing="10.0" prefWidth="600.0" prefHeight="400.0"
+          layoutX="200.0" layoutY="300.0">
+        <TextField fx:id="username" prefHeight="25.0" prefWidth="300.0" promptText="Username"/>
+        <PasswordField fx:id="password" prefHeight="25.0" prefWidth="300.0" promptText="Password"/>
+        <TextField fx:id="name" prefHeight="25.0" prefWidth="300.0" promptText="Name"/>
+        <TextField fx:id="surname" prefHeight="25.0" prefWidth="300.0" promptText="Surname"/>
+        <Button fx:id="login" mnemonicParsing="false" onAction="#handleLogin"
+                prefHeight="25.0" prefWidth="300.0" text="Login"/>
+        <Button fx:id="showRegister" mnemonicParsing="false" onAction="#handleShowRegister"
+                prefHeight="25.0" prefWidth="300.0" text="Register"/>
+        <Button fx:id="showLogin" mnemonicParsing="false" onAction="#handleShowLogin"
+                prefHeight="25.0" prefWidth="300.0" text="Back"/>
+        <Button fx:id="signUp" mnemonicParsing="false" onAction="#handleSignUp"
+                prefHeight="25.0" prefWidth="300.0" text="Sign Up"/>
+    </VBox>
+
+</AnchorPane>

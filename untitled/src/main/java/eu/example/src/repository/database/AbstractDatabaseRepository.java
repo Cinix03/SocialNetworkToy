@@ -1,6 +1,7 @@
 package eu.example.src.repository.database;
 
 import eu.example.src.domain.Entity;
+import eu.example.src.domain.Friendship;
 import eu.example.src.domain.Utilizator;
 import eu.example.src.repository.memory.InMemoryRepository;
 import eu.example.src.validators.ValidationException;
@@ -15,7 +16,7 @@ public abstract class AbstractDatabaseRepository<ID, E extends Entity<ID>> exten
     private final String url;
     private final String username;
     private final String password;
-    private Connection connection;
+    protected Connection connection;
 
     public AbstractDatabaseRepository(Validator<E> validator, String url, String username, String password) {
         super(validator);
@@ -34,6 +35,8 @@ public abstract class AbstractDatabaseRepository<ID, E extends Entity<ID>> exten
         }
     }
 
+
+
     private void loadData() {
         try {
             String sql = "SELECT * FROM " + getTableName();
@@ -48,7 +51,7 @@ public abstract class AbstractDatabaseRepository<ID, E extends Entity<ID>> exten
         }
     }
 
-
+    public abstract String getClassType();
 
     public abstract E createEntity(ResultSet resultSet) throws SQLException;
 
@@ -61,8 +64,9 @@ public abstract class AbstractDatabaseRepository<ID, E extends Entity<ID>> exten
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             prepareStatementForEntity(entity, preparedStatement);
             preparedStatement.executeUpdate();
-            return super.save(entity); // Also save in memory
+            return super.save(entity);
         } catch (SQLException e) {
+            System.out.println(e.getMessage());
             throw new RuntimeException("Could not save entity", e);
         }
     }
@@ -74,12 +78,14 @@ public abstract class AbstractDatabaseRepository<ID, E extends Entity<ID>> exten
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setObject(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
+            //returneaza true daca exista un rand in result set
             if (resultSet.next()) {
                 return Optional.of(createEntity(resultSet));
             }
         } catch (SQLException e) {
             throw new RuntimeException("Could not find entity", e);
         }
+        //ca sa returneze un Optional gol daca nu a gasit
         return super.findOne(id);
     }
 
@@ -105,11 +111,22 @@ public abstract class AbstractDatabaseRepository<ID, E extends Entity<ID>> exten
         Optional<E> entity = super.delete(id);
         if (entity.isPresent()) {
             try {
-                String sql = "DELETE FROM " + getTableName() + " WHERE id = ?";
-                PreparedStatement preparedStatement = connection.prepareStatement(sql);
-                preparedStatement.setObject(1, id);
-                preparedStatement.executeUpdate();
-                return entity;
+                if(getClassType() == "Friendship"){
+                    String sql = "DELETE FROM " + getTableName() + " WHERE id1 = ? AND id2 = ?";
+                    PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                    Friendship friendship = (Friendship) entity.get();
+                    preparedStatement.setObject(1, friendship.getId().getFirst());
+                    preparedStatement.setObject(2, friendship.getId().getSecond());
+                    preparedStatement.executeUpdate();
+                    return entity;
+                }
+                else {
+                    String sql = "DELETE FROM " + getTableName() + " WHERE id = ?";
+                    PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                    preparedStatement.setObject(1, id);
+                    preparedStatement.executeUpdate();
+                    return entity;
+                }
             } catch (SQLException e) {
                 throw new RuntimeException("Could not delete entity", e);
             }
@@ -118,24 +135,24 @@ public abstract class AbstractDatabaseRepository<ID, E extends Entity<ID>> exten
         }
     }
 
-    @Override
-    public Optional<E> update(E entity) {
-        Optional<E> existingEntity = super.update(entity);
-        if (existingEntity.isPresent()) {
-            try {
-                String sql = "UPDATE " + getTableName() + " SET " + getUpdateSetClause() + " WHERE id = ?";
-                PreparedStatement preparedStatement = connection.prepareStatement(sql);
-                prepareStatementForEntity(entity, preparedStatement);
-                preparedStatement.setObject(getUpdateParameterCount()+1, entity.getId()); // Last parameter is ID
-                preparedStatement.executeUpdate();
-                return existingEntity;
-            } catch (SQLException e) {
-                throw new RuntimeException("Could not update entity", e);
-            }
-        } else {
-            throw new ValidationException("Entity does not exist");
-        }
-    }
+//    @Override
+//    public Optional<E> update(E entity) {
+//        Optional<E> existingEntity = super.update(entity);
+//        if (existingEntity.isPresent()) {
+//            try {
+//                String sql = "UPDATE " + getTableName() + " SET " + getUpdateSetClause() + " WHERE id = ?";
+//                PreparedStatement preparedStatement = connection.prepareStatement(sql);
+//                prepareStatementForEntity(entity, preparedStatement);
+//                preparedStatement.setObject(getUpdateParameterCount()+1, entity.getId());
+//                preparedStatement.executeUpdate();
+//                return existingEntity;
+//            } catch (SQLException e) {
+//                throw new RuntimeException("Could not update entity", e);
+//            }
+//        } else {
+//            throw new ValidationException("Entity does not exist");
+//        }
+//    }
 
     protected abstract String getTableName();
 
