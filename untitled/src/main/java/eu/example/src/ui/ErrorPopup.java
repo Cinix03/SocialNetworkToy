@@ -13,4 +13,13 @@ public class ErrorPopup {
 
         alert.showAndWait();
     }
+
+    public static void showInformation(String title, String message) {
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setTitle(title);
+        alert.setHeaderText("Informație");
+        alert.setContentText(message);
+
+        alert.showAndWait();
+    }
 }

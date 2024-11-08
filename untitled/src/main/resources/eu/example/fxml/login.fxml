@@ -12,14 +12,16 @@
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="eu.example.src.controller.LoginController"
             stylesheets="@/eu/example/fxml/Styles.css"
+            styleClass="AnchorPaneLogin"
             prefHeight="1000.0" prefWidth="1000.0">
 
     <VBox alignment="CENTER" spacing="10.0" prefWidth="600.0" prefHeight="400.0"
           layoutX="200.0" layoutY="300.0">
-        <TextField fx:id="username" prefHeight="25.0" prefWidth="300.0" promptText="Username"/>
+        <Label fx:id="message" styleClass="LabelLogo" text="Social Network"/>
+        <TextField fx:id="username" styleClass="text-fieldLogin" prefHeight="25.0" prefWidth="300.0" promptText="Username"/>
         <PasswordField fx:id="password" prefHeight="25.0" prefWidth="300.0" promptText="Password"/>
-        <TextField fx:id="name" prefHeight="25.0" prefWidth="300.0" promptText="Name"/>
-        <TextField fx:id="surname" prefHeight="25.0" prefWidth="300.0" promptText="Surname"/>
+        <TextField fx:id="name" styleClass="text-fieldLogin" prefHeight="25.0" prefWidth="300.0" promptText="Name"/>
+        <TextField fx:id="surname" styleClass="text-fieldLogin" prefHeight="25.0" prefWidth="300.0" promptText="Surname"/>
         <Button fx:id="login" mnemonicParsing="false" onAction="#handleLogin"
                 prefHeight="25.0" prefWidth="300.0" text="Login"/>
         <Button fx:id="showRegister" mnemonicParsing="false" onAction="#handleShowRegister"

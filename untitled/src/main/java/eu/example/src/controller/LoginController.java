@@ -5,11 +5,20 @@ import eu.example.src.services.FriendshipService;
 import eu.example.src.services.Service;
 import eu.example.src.services.UtilizatorService;
 import eu.example.src.ui.ErrorPopup;
+import javafx.scene.Parent;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+
+import java.net.URL;
+
+import static eu.example.src.Utils.PasswordUtils.checkPassword;
+import static eu.example.src.Utils.PasswordUtils.hashPassword;
 
 
 public class LoginController {
@@ -56,21 +65,37 @@ public class LoginController {
         signUp.setVisible(false);
     }
 
-    public void setUtilizatorService(UtilizatorService utilizatorService) {
-        this.utilizatorService = utilizatorService;
+    public void setUtilizatorService(UtilizatorService UtilizatorService) {
+        this.utilizatorService = UtilizatorService;
     }
 
-    public void setFriendshipService(FriendshipService friendshipService) {
-        this.friendshipService = friendshipService;
+    public void setFriendshipService(FriendshipService FriendshipService) {
+        this.friendshipService = FriendshipService;
     }
 
     @FXML
     public void handleLogin() {
         try {
             Utilizator utilizator = utilizatorService.findByUsername(username.getText());
-            if(utilizator.getPassword() != password.getText())
+            if(checkPassword(password.getText(), utilizator.getPassword()) == false)
                 throw new RuntimeException("Parola gresita");
             System.out.println("Logat cu succes");
+            URL fxmlLocation = getClass().getResource("/eu/example/fxml/userHomePage.fxml");
+            if (fxmlLocation == null) {
+                System.out.println("Fișierul FXML nu a fost găsit! Verifică locația.");
+                return;
+            }
+            FXMLLoader loader = new FXMLLoader(fxmlLocation);
+            Parent root = loader.load();
+
+            UserHomePageController userHomePageController = loader.getController();
+            userHomePageController.setUtilizatorService(utilizatorService);
+            userHomePageController.setFriendshipService(friendshipService);
+            userHomePageController.setUtilizator(utilizator);
+
+            Stage stage = (Stage) login.getScene().getWindow();
+            stage.setScene(new Scene(root, 1000, 1000));
+
         } catch (Exception e) {
             // fa un pop up window cu eroarea
             ErrorPopup.showError("Eroare", e.getMessage());
@@ -102,7 +127,7 @@ public class LoginController {
     @FXML
     public void handleSignUp() {
         try {
-            Utilizator utilizator = new Utilizator(name.getText(), surname.getText(), username.getText(), password.getText());
+            Utilizator utilizator = new Utilizator(name.getText(), surname.getText(), username.getText(), hashPassword(password.getText()));
             utilizatorService.add(utilizator);
             name.setText("");
             surname.setText("");

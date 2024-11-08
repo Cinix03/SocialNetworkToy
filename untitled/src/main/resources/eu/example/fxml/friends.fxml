@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="eu.example.src.controller.FriendsController"
+            prefHeight="1000.0" prefWidth="1000.0"
+            stylesheets="@/eu/example/fxml/Styles.css"
+            styleClass="AnchorUserHome">
+
+    <HBox fx:id="navbar2" alignment="CENTER" spacing="20" styleClass="navbar"
+          AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+
+
+        <!-- Titlul paginii -->
+        <Label fx:id="numePagina" text="Friends" styleClass="navbar-title"/>
+
+
+        <Region HBox.hgrow="ALWAYS" />
+
+        <!-- Butoanele pe care le dorim centrate -->
+        <Button fx:id="getFriendsButton" text="Get Friends" onAction="#initModel" />
+        <Button fx:id="friendRequestButton" text="Friend Request" onAction="#handleFriendshipRequests" />
+        <Button fx:id="requestsSentButton" text="Requests Sent" onAction="#handleRequestsSent" />
+
+        <!-- Al doilea Region pentru a împinge elementele rămase spre dreapta -->
+        <Region HBox.hgrow="ALWAYS" />
+
+        <!-- Butonul Back, aliniat la dreapta -->
+        <Button fx:id="backButton" text="Back" styleClass="navbar-button" onAction="#handleBack"/>
+    </HBox>
+
+    <!-- VBox pentru aliniere diferită -->
+    <VBox alignment="TOP_RIGHT" spacing="10.0"
+          AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+          AnchorPane.topAnchor="60.0" AnchorPane.bottomAnchor="0.0">
+
+        <!-- ListView aliniat diferit -->
+        <ListView fx:id="friendsList" prefWidth="400.0" prefHeight="300.0"
+                  styleClass="friends-list"/>
+    </VBox>
+
+
+</AnchorPane>
+
+

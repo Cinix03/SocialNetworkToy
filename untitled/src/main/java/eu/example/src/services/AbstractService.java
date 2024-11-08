@@ -5,6 +5,8 @@ import eu.example.src.repository.Repository;
 import eu.example.src.validators.ValidationException;
 import eu.example.src.validators.Validator;
 
+import java.util.Optional;
+
 public abstract class AbstractService<ID, E extends Entity<ID>> implements Service{
     protected Repository<ID, E> repo;
     protected Validator<E> validator;
@@ -55,7 +57,7 @@ public abstract class AbstractService<ID, E extends Entity<ID>> implements Servi
     }
 
     @Override
-    public Object findOne(Object o) {
+    public Optional<E> findOne(Object o) {
         if(!isTypeOfID(o))
             throw new ValidationException("Invalid type");
         return repo.findOne((ID) o);

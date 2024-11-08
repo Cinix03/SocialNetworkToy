@@ -7,11 +7,37 @@ import eu.example.src.domain.Utilizator;
 import eu.example.src.repository.Repository;
 import eu.example.src.validators.Validator;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FriendshipService extends AbstractService<Tuple<Long, Long>, Friendship>{
+    private List<Runnable> listeners = new ArrayList<>();
     public FriendshipService(Repository<Tuple<Long, Long>, Friendship> repo, Validator<Friendship> validator) {
         super(repo, validator);
+    }
+
+    // Metodă pentru a adăuga un listener
+    public void addChangeListener(Runnable listener) {
+        listeners.add(listener);
+    }
+
+    // Metodă pentru a notifica toți listenerii
+    private void notifyListeners() {
+        for (Runnable listener : listeners) {
+            listener.run();
+        }
+    }
+
+    @Override
+    public void add(Object entity) {
+        super.add(entity);
+        notifyListeners();
+    }
+
+    @Override
+    public void delete(Object o) {
+        super.delete(o);
+        notifyListeners();
     }
 
     @Override

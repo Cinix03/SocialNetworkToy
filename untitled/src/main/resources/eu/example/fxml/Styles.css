@@ -1,15 +1,19 @@
 /* styles.css */
 
 /* Stil pentru întreaga fereastră */
-AnchorPane {
+.AnchorPaneLogin {
     -fx-background-image: url("7555.jpg");
     -fx-background-size: cover; /* Acoperă întreaga zonă */
     -fx-background-position: left; /* Poziționează imaginea la stânga și la mijloc pe verticală */
 }
 
+.AnchorUserHome{
+    -fx-background-color: #494e5b;
+}
+
 
 /* Stil pentru TextField */
-.text-field {
+.text-fieldLogin {
     -fx-background-color: #ffffff; /* Fundal alb pentru câmpurile de text */
     -fx-border-color: #ccc; /* Bordură gri deschis */
     -fx-border-radius: 5; /* Colțuri rotunjite */
@@ -44,4 +48,95 @@ AnchorPane {
 /* Stil pentru promptText */
 .text-field .prompt-text {
     -fx-text-fill: #aaa; /* Culoare gri deschis pentru textul de prompt */
+}
+
+/* Stil pentru Label */
+.LabelLogo {
+    -fx-font-size: 70px; /* Dimensiune text */
+    -fx-text-fill: #395ce6; /* Culoare text */
+
+}
+
+.LabelHello{
+    -fx-font-size: 35px; /* Dimensiune text */
+    -fx-text-fill: #d9dded; /* Culoare text */
+}
+
+/* Navbar styling */
+.navbar {
+    -fx-background-color: #3a3f4b; /* Fundal de navbar */
+    -fx-padding: 10px 20px;
+    -fx-spacing: 15px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 5, 0.0, 0, 2);
+}
+
+.navbar-title {
+    -fx-font-size: 24px;
+    -fx-text-fill: #d9dded;
+    -fx-font-weight: bold;
+}
+
+.navbar-button {
+    -fx-background-color: #2299c7; /* Buton cu o culoare complementară */
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-border-radius: 5;
+    -fx-padding: 6 15;
+    -fx-cursor: hand;
+}
+
+.navbar-button:hover {
+    -fx-background-color: #1a7aa1 !important;/* Schimbare de culoare la hover */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 3, 0.0, 0, 2);
+}
+
+/* Stiluri generale pentru ListView */
+.friends-list {
+    -fx-background-color: #363e47; /* Un fundal gri închis pentru ListView */
+    -fx-border-color: #4e5b66; /* Bordură gri deschis pentru ListView */
+    -fx-border-radius: 10; /* Colțuri rotunjite */
+    -fx-padding: 10; /* Margini interioare */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 5, 0.0, 0, 2); /* Umbra pentru efect vizual */
+}
+
+/* Stiluri pentru fiecare element din listă */
+.friends-list .list-cell {
+    -fx-background-color: #494e5b; /* Fundal gri deschis pentru fiecare element */
+    -fx-text-fill: #d9dded; /* Text alb */
+    -fx-font-size: 16px; /* Dimensiune text */
+    -fx-padding: 8; /* Spațiu intern pentru elemente */
+    -fx-border-color: transparent; /* Fără bordură vizibilă pentru elementele din listă */
+    -fx-border-radius: 5; /* Colțuri rotunjite pentru elementele din listă */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.0, 0, 1); /* Umbră subtilă pentru elemente */
+}
+
+/* Stiluri pentru elementele din listă când sunt selectate */
+.friends-list .list-cell:focused {
+    -fx-background-color: #0e5091; /* Fundal albastru pentru elementele selectate */
+    -fx-text-fill: white; /* Text alb pentru elementele selectate */
+}
+
+/* Stiluri pentru elementele din listă când sunt hover */
+.friends-list .list-cell:hover {
+    -fx-background-color: #5f6d78; /* Fundal gri mai deschis la hover */
+    -fx-text-fill: #ffffff; /* Text alb la hover */
+}
+
+/* Stiluri pentru ListView (border) */
+.friends-list {
+    -fx-border-radius: 10px;
+    -fx-border-color: #6b767d; /* Bordură gri deschis pentru lista întreagă */
+    -fx-border-width: 2px;
+}
+
+/* Stiluri pentru textul din listă */
+.friends-list .list-cell {
+    -fx-text-fill: #e0e0e0; /* Text de culoare gri deschis pentru elementele din listă */
+    -fx-font-size: 16px; /* Dimensiune text */
+    -fx-padding: 10px; /* Spațiu între elemente */
+}
+
+/* Culoare de fundal pentru ListView atunci când nu sunt elemente */
+.friends-list:empty {
+    -fx-background-color: #2f353e; /* Fundal gri închis când lista este goală */
 }

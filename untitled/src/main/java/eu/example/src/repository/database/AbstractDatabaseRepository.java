@@ -62,7 +62,9 @@ public abstract class AbstractDatabaseRepository<ID, E extends Entity<ID>> exten
         try {
             String sql = "INSERT INTO " + getTableName() + " (" + getColumns() + ") VALUES (" + getPlaceholder() + ")";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            System.out.println(sql);
             prepareStatementForEntity(entity, preparedStatement);
+            System.out.println(sql);
             preparedStatement.executeUpdate();
             return super.save(entity);
         } catch (SQLException e) {
