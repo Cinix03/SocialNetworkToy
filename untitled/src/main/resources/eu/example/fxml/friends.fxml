@@ -24,7 +24,7 @@
         <Region HBox.hgrow="ALWAYS" />
 
         <!-- Butoanele pe care le dorim centrate -->
-        <Button fx:id="getFriendsButton" text="Get Friends" onAction="#initModel" />
+        <Button fx:id="getFriendsButton" text="Get Friends" onAction="#handleBackToFriends" />
         <Button fx:id="friendRequestButton" text="Friend Request" onAction="#handleFriendshipRequests" />
         <Button fx:id="requestsSentButton" text="Requests Sent" onAction="#handleRequestsSent" />
 
@@ -43,6 +43,16 @@
         <!-- ListView aliniat diferit -->
         <ListView fx:id="friendsList" prefWidth="400.0" prefHeight="300.0"
                   styleClass="friends-list"/>
+
+        <HBox alignment="TOP_CENTER" spacing="10">
+            <Button fx:id="acceptButton" text="Accept" onAction="#handleAcceptRequest" />
+            <Button fx:id="declineButton" text="Decline" onAction="#handleDeclineRequest" />
+            <Button fx:id="blockButton" text="Block" onAction="#handleBlockRequest" />
+        </HBox>
+        <VBox alignment="TOP_CENTER" spacing="10">
+            <Button fx:id="RemoveFriend" text="Remove Friend" onAction="#handleRemoveFriendship" />
+        </VBox>
+
     </VBox>
 
 

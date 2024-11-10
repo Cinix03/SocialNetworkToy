@@ -18,15 +18,13 @@ import java.io.File;
 import java.net.URL;
 
 
-public class MainGraphicInterface extends Application{
-
+public class MainGraphicInterface extends Application {
     private UtilizatorService utilizatorService;
     private FriendshipService friendshipService;
 
     @Override
-    public void start(Stage stage) throws Exception {
-        System.out.println("start");
-
+    public void start(Stage primaryStage) throws Exception {
+        // Inițializarea serviciilor
         UtilizatorValidator utilizatorValidator = new UtilizatorValidator();
         UtilizatorDatabaseRepo repoUtilizator = new UtilizatorDatabaseRepo(utilizatorValidator, "jdbc:postgresql://localhost:5432/socialnetwork", "vasilegeorge", "parola");
         FriendshipValidator friendshipValidator = new FriendshipValidator(repoUtilizator);
@@ -35,7 +33,14 @@ public class MainGraphicInterface extends Application{
         utilizatorService = new UtilizatorService(repoUtilizator, utilizatorValidator);
         friendshipService = new FriendshipService(friendshipRepo, friendshipValidator);
 
-        // Corectarea locației FXML
+        // Crează prima fereastră de login
+        createLoginWindow();
+
+        // Crează a doua fereastră de login (pentru a testa deschiderea multiplă)
+        createLoginWindow();
+    }
+
+    private void createLoginWindow() throws Exception {
         URL fxmlLocation = getClass().getResource("/eu/example/fxml/login.fxml");
         if (fxmlLocation == null) {
             System.out.println("Fișierul FXML nu a fost găsit! Verifică locația.");
@@ -45,38 +50,16 @@ public class MainGraphicInterface extends Application{
         FXMLLoader loader = new FXMLLoader(fxmlLocation);
         Parent root = loader.load();
 
+        // Obține controllerul și setează serviciile
         LoginController loginController = loader.getController();
         loginController.setUtilizatorService(utilizatorService);
         loginController.setFriendshipService(friendshipService);
 
-        stage.setTitle("Social Network");
-        Scene scene = new Scene(root, 1000, 1000);
-        stage.setScene(scene);
+        // Creează o nouă fereastră (Stage)
+        Stage stage = new Stage();
+        stage.setTitle("Social Network - Login");
+        stage.setScene(new Scene(root, 1000, 1000));
         stage.show();
-    }
-
-
-    public void init() {
-                // Inițializăm validatoarele
-        UtilizatorValidator utilizatorValidator = new UtilizatorValidator();
-
-        // Inițializăm repository-urile
-//        UtilizatorRepository repoFile = new UtilizatorRepository(utilizatorValidator, "./data/utilizatori.txt");
-//        repoFile.initialize();
-        UtilizatorDatabaseRepo repoUtilizator = new UtilizatorDatabaseRepo(utilizatorValidator,"jdbc:postgresql://localhost:5432/socialnetwork", "vasilegeorge", "parola");
-
-        // Inițializăm validatorul de prietenie, având deja repo-ul utilizatorilor inițializat
-        FriendshipValidator friendshipValidator = new FriendshipValidator(repoUtilizator);
-
-        // Inițializăm repository-ul de prietenie
-        FriendshipDatabaseRepo friendshipRepo = new FriendshipDatabaseRepo(friendshipValidator, "jdbc:postgresql://localhost:5432/socialnetwork", "vasilegeorge", "parola");
-
-        // Creăm serviciul utilizator
-        UtilizatorService utilizatorService = new UtilizatorService(repoUtilizator, utilizatorValidator);
-
-        // Creăm serviciul pentru prietenie
-        FriendshipService friendshipService = new FriendshipService(friendshipRepo, friendshipValidator);
-
     }
 
     public static void main(String[] args) {

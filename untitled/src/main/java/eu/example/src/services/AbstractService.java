@@ -60,6 +60,7 @@ public abstract class AbstractService<ID, E extends Entity<ID>> implements Servi
     public Optional<E> findOne(Object o) {
         if(!isTypeOfID(o))
             throw new ValidationException("Invalid type");
+        System.out.println(1);
         return repo.findOne((ID) o);
     }
 

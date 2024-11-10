@@ -9,8 +9,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 import java.util.Optional;
 import java.sql.Timestamp;
+import java.time.format.DateTimeFormatterBuilder;
 
 public class FriendshipDatabaseRepo extends AbstractDatabaseRepository<Tuple<Long, Long>, Friendship> {
     public FriendshipDatabaseRepo(Validator<Friendship> validator, String url, String username, String password) {
@@ -18,33 +20,26 @@ public class FriendshipDatabaseRepo extends AbstractDatabaseRepository<Tuple<Lon
     }
 
 
+
     @Override
     public Friendship createEntity(ResultSet resultSet) throws SQLException {
         try {
             Long id1 = resultSet.getLong("id1");
             Long id2 = resultSet.getLong("id2");
-
             String status = resultSet.getString("status");
 
-            // Preluarea datei ca String din baza de date
-            String dateString = resultSet.getString("data");
-
+            // Preluăm data ca `Timestamp` direct din ResultSet
+            Timestamp timestamp = resultSet.getTimestamp("data");
             Long sender = resultSet.getLong("sender");
             Long receiver = resultSet.getLong("receiver");
 
-            // Verifică dacă data este validă
-            if (dateString == null || dateString.isEmpty()) {
-                throw new SQLException("Data prieteniei este null sau goală în tabelul friendships");
+            // Verifică dacă timestamp-ul este null
+            if (timestamp == null) {
+                throw new SQLException("Data prieteniei este null în tabelul friendships");
             }
 
-            // Încearcă să parsezi string-ul într-un LocalDateTime
-            LocalDateTime dateTime = null;
-            try {
-                // Folosește formatul cu milisecunde (până la 6 caractere pentru microsecunde)
-                dateTime = LocalDateTime.parse(dateString, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSS"));
-            } catch (Exception e) {
-                throw new SQLException("Formatul datei nu este valid: " + dateString, e);
-            }
+            // Convertim `Timestamp` în `LocalDateTime`
+            LocalDateTime dateTime = timestamp.toLocalDateTime();
 
             Friendship friendship = new Friendship(id1, id2);
             friendship.setStatus(status);
@@ -54,10 +49,11 @@ public class FriendshipDatabaseRepo extends AbstractDatabaseRepository<Tuple<Lon
             return friendship;
 
         } catch (SQLException e) {
-            // Mesaj mai detaliat pentru depanare
             throw new SQLException("Eroare la crearea entității Friendship din ResultSet", e);
         }
     }
+
+
 
 
 

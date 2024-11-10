@@ -2,6 +2,7 @@ package eu.example.src.repository.database;
 
 import eu.example.src.domain.Entity;
 import eu.example.src.domain.Friendship;
+import eu.example.src.domain.Tuple;
 import eu.example.src.domain.Utilizator;
 import eu.example.src.repository.memory.InMemoryRepository;
 import eu.example.src.validators.ValidationException;
@@ -76,13 +77,29 @@ public abstract class AbstractDatabaseRepository<ID, E extends Entity<ID>> exten
     @Override
     public Optional<E> findOne(ID id) {
         try {
-            String sql = "SELECT * FROM " + getTableName() + " WHERE id = ?";
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setObject(1, id);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            //returneaza true daca exista un rand in result set
-            if (resultSet.next()) {
-                return Optional.of(createEntity(resultSet));
+            System.out.println(2);
+            if(getClassType() == "Friendship"){
+                System.out.println(3);
+                String sql = "SELECT * FROM " + getTableName() + " WHERE id1 = ? AND id2 = ?";
+                PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                Tuple<Long, Long> friendship = (Tuple) id;
+                preparedStatement.setObject(1, friendship.getFirst());
+                preparedStatement.setObject(2, friendship.getSecond());
+                ResultSet resultSet = preparedStatement.executeQuery();
+                //returneaza true daca exista un rand in result set
+                if (resultSet.next()) {
+                    return Optional.of(createEntity(resultSet));
+                }
+            }
+            else {
+                String sql = "SELECT * FROM " + getTableName() + " WHERE id = ?";
+                PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setObject(1, id);
+                ResultSet resultSet = preparedStatement.executeQuery();
+                //returneaza true daca exista un rand in result set
+                if (resultSet.next()) {
+                    return Optional.of(createEntity(resultSet));
+                }
             }
         } catch (SQLException e) {
             throw new RuntimeException("Could not find entity", e);
