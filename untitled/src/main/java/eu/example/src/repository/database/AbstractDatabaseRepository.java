@@ -1,9 +1,6 @@
 package eu.example.src.repository.database;
 
-import eu.example.src.domain.Entity;
-import eu.example.src.domain.Friendship;
-import eu.example.src.domain.Tuple;
-import eu.example.src.domain.Utilizator;
+import eu.example.src.domain.*;
 import eu.example.src.repository.memory.InMemoryRepository;
 import eu.example.src.validators.ValidationException;
 import eu.example.src.validators.Validator;
@@ -64,6 +61,13 @@ public abstract class AbstractDatabaseRepository<ID, E extends Entity<ID>> exten
             String sql = "INSERT INTO " + getTableName() + " (" + getColumns() + ") VALUES (" + getPlaceholder() + ")";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             System.out.println(sql);
+            if(getClassType().equals("Utilizator"))
+            {
+                Utilizator u1 = (Utilizator) entity;
+                System.out.println(u1.getProfilePicturePath());
+            }
+
+            //System.out.println(entity.get);
             prepareStatementForEntity(entity, preparedStatement);
             System.out.println(sql);
             preparedStatement.executeUpdate();
@@ -154,24 +158,27 @@ public abstract class AbstractDatabaseRepository<ID, E extends Entity<ID>> exten
         }
     }
 
-//    @Override
-//    public Optional<E> update(E entity) {
-//        Optional<E> existingEntity = super.update(entity);
-//        if (existingEntity.isPresent()) {
-//            try {
-//                String sql = "UPDATE " + getTableName() + " SET " + getUpdateSetClause() + " WHERE id = ?";
-//                PreparedStatement preparedStatement = connection.prepareStatement(sql);
-//                prepareStatementForEntity(entity, preparedStatement);
-//                preparedStatement.setObject(getUpdateParameterCount()+1, entity.getId());
-//                preparedStatement.executeUpdate();
-//                return existingEntity;
-//            } catch (SQLException e) {
-//                throw new RuntimeException("Could not update entity", e);
-//            }
-//        } else {
-//            throw new ValidationException("Entity does not exist");
-//        }
-//    }
+    @Override
+    public Optional<E> update(E entity) {
+        Optional<E> existingEntity = super.update(entity);
+        if (existingEntity.isPresent()) {
+            try {
+                if(getClassType().equals("Utilizator")) {
+                    String sql = "UPDATE " + getTableName() + " SET " + getUpdateSetClause() + " WHERE id = ?";
+                    PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                    prepareStatementForEntity(entity, preparedStatement);
+                    preparedStatement.setObject(getUpdateParameterCount() + 1, entity.getId());
+                    preparedStatement.executeUpdate();
+                }
+                return existingEntity;
+            } catch (SQLException e) {
+                throw new RuntimeException("Could not update entity", e);
+            }
+        } else {
+            throw new ValidationException("Entity does not exist");
+        }
+    }
+
 
     protected abstract String getTableName();
 
@@ -191,5 +198,9 @@ public abstract class AbstractDatabaseRepository<ID, E extends Entity<ID>> exten
         } catch (SQLException e) {
             throw new RuntimeException("Could not close connection", e);
         }
+    }
+
+    public Iterable<E> findAllPaginated(int pageNumber, int pageSize, int idCautat) {
+        return null;
     }
 }

@@ -10,6 +10,7 @@ public class Utilizator extends Entity<Long> {
     private String lastName;
     private String username;
     private String password;
+    private String profilePicturePath;
 
     private List<Utilizator> friends;
 
@@ -18,6 +19,7 @@ public class Utilizator extends Entity<Long> {
         this.lastName = lastName;
         this.username = username;
         this.password = password;
+        this.profilePicturePath = "/Users/vasilegeorge/Desktop/SocialNetworkToy/untitled/src/main/resources/eu/example/fxml/default-profile-picture-avatar-user-avatar-icon-person-icon-head-icon-profile-picture-icons-default-anonymous-user-male-and-female-businessman-photo-placeholder-social-network-avatar-portrait-free-vector.jpg";
         friends = new ArrayList<>();
     }
 
@@ -35,6 +37,14 @@ public class Utilizator extends Entity<Long> {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getProfilePicturePath() {
+        return profilePicturePath;
+    }
+
+    public void setProfilePicturePath(String ProfilePicturePath) {
+        this.profilePicturePath = ProfilePicturePath;
     }
 
     public String getPassword() {

@@ -73,5 +73,10 @@ public class InMemoryRepository<ID, E extends Entity<ID>> implements Repository<
         validator.validate(entity);
         return Optional.ofNullable(entities.computeIfPresent(entity.getId(), (id, e) -> entity));
     }
+
+    @Override
+    public Iterable<E> findAllPaginated(int page, int size, int idCautat) {
+        return null;
+    }
 }
 

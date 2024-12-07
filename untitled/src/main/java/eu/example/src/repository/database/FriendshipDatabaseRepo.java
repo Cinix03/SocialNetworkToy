@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
+import java.util.ArrayList;
 import java.util.Optional;
 import java.sql.Timestamp;
 import java.time.format.DateTimeFormatterBuilder;
@@ -70,6 +71,41 @@ public class FriendshipDatabaseRepo extends AbstractDatabaseRepository<Tuple<Lon
         preparedStatement.setObject(5, entity.getSender());
         preparedStatement.setObject(6, entity.getReceiver());
     }
+
+    @Override
+    public ArrayList<Friendship> findAllPaginated(int pageNumber, int pageSize, int idCautat) {
+        if (pageNumber < 1 || pageSize < 1) {
+            throw new IllegalArgumentException("Page number and page size must be greater than zero.");
+        }
+
+        try {
+            int offset = (pageNumber - 1) * pageSize;
+            // Adăugăm condiția WHERE pentru a filtra după id1 sau id2
+            String sql = "SELECT * FROM " + getTableName() +
+                    " WHERE status = 'accepted' AND (id1 = ? OR id2 = ?) LIMIT ? OFFSET ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, idCautat);
+            preparedStatement.setInt(2, idCautat);
+            preparedStatement.setInt(3, pageSize);
+            preparedStatement.setInt(4, offset);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            ArrayList<Friendship> entities = new ArrayList<>();
+            int cnt = 0;
+            while (resultSet.next()) {
+                entities.add(createEntity(resultSet));
+                System.out.println(cnt);
+                cnt++;
+            }
+            System.out.println(cnt);
+            return entities;
+        } catch (SQLException e) {
+            throw new RuntimeException("Could not find all entities paginated", e);
+        }
+    }
+
+
+
 
     @Override
     public String getClassType() {

@@ -1,10 +1,12 @@
 package eu.example.src.services;
 
 import eu.example.src.domain.Entity;
+import eu.example.src.domain.Friendship;
 import eu.example.src.repository.Repository;
 import eu.example.src.validators.ValidationException;
 import eu.example.src.validators.Validator;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 public abstract class AbstractService<ID, E extends Entity<ID>> implements Service{

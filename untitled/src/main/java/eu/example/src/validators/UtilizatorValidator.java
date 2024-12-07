@@ -17,11 +17,6 @@ public class UtilizatorValidator implements Validator<Utilizator> {
         String regex = "^[A-Za-z]+(?: [A-Za-z]+)*$";
 
         // Creăm un pattern din regex
-        Pattern pattern = Pattern.compile(regex);
-        if(!pattern.matcher(entity.getFirstName()).matches())
-            throw new InvalidUserException("Numele nu este valid");
-        if(!pattern.matcher(entity.getLastName()).matches())
-                throw new InvalidUserException("Prenumele nu este valid");
     }
 
 }

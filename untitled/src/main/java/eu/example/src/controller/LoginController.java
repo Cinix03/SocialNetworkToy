@@ -2,6 +2,7 @@ package eu.example.src.controller;
 
 import eu.example.src.domain.Utilizator;
 import eu.example.src.services.FriendshipService;
+import eu.example.src.services.MessagesService;
 import eu.example.src.services.Service;
 import eu.example.src.services.UtilizatorService;
 import eu.example.src.ui.ErrorPopup;
@@ -11,6 +12,7 @@ import javafx.scene.Scene;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -25,6 +27,7 @@ public class LoginController {
 
     private UtilizatorService utilizatorService;
     private FriendshipService friendshipService;
+    private MessagesService messagesService;
 
     @FXML
     private Button showLogin;
@@ -73,6 +76,12 @@ public class LoginController {
         this.friendshipService = FriendshipService;
     }
 
+    public void setMessagesService(MessagesService messagesService) {
+        this.messagesService = messagesService;
+    }
+
+
+
     @FXML
     public void handleLogin() {
         try {
@@ -91,6 +100,7 @@ public class LoginController {
             UserHomePageController userHomePageController = loader.getController();
             userHomePageController.setUtilizatorService(utilizatorService);
             userHomePageController.setFriendshipService(friendshipService);
+            userHomePageController.setMessagesService(messagesService);
             userHomePageController.setUtilizator(utilizator);
 
             Stage stage = (Stage) login.getScene().getWindow();

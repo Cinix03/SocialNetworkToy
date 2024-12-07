@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="eu.example.src.controller.ProfileController"
+            stylesheets="@/eu/example/fxml/Styles.css"
+            styleClass="AnchorUserHome"
+            prefHeight="400.0" prefWidth="600.0">
+
+    <HBox fx:id="navbar" alignment="CENTER_LEFT" spacing="20" styleClass="navbar"
+          AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <Label fx:id="numeUser" text="NumeUser" styleClass="navbar-title"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Button fx:id="friends" text="Friends" styleClass="navbar-button" onAction="#handleFriends"/>
+        <Button fx:id="logout" mnemonicParsing="false" onAction="#handleLogout" text="Logout" styleClass="navbar-button"/>
+        <Button fx:id="findPeople" text="Find People" onAction="#handleFindPeople" styleClass="navbar-button"/>
+    </HBox>
+    <ImageView fx:id="profileImageView" fitWidth="300.0" fitHeight="300.0" layoutX="20.0" layoutY="80.0"/>
+    <Button fx:id="uploadButton" text="Upload Image" layoutX="20.0" layoutY="400.0" onAction="#handleSelectProfilePicture" styleClass="navbar-button"/>
+
+</AnchorPane>

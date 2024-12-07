@@ -1,6 +1,9 @@
 package eu.example.src.ui;
 
 import eu.example.src.controller.LoginController;
+import eu.example.src.repository.database.MessagesDatabaseRepo;
+import eu.example.src.services.MessagesService;
+import eu.example.src.validators.MessagesValidator;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
@@ -21,6 +24,7 @@ import java.net.URL;
 public class MainGraphicInterface extends Application {
     private UtilizatorService utilizatorService;
     private FriendshipService friendshipService;
+    private MessagesService messagesService;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -29,9 +33,13 @@ public class MainGraphicInterface extends Application {
         UtilizatorDatabaseRepo repoUtilizator = new UtilizatorDatabaseRepo(utilizatorValidator, "jdbc:postgresql://localhost:5432/socialnetwork", "vasilegeorge", "parola");
         FriendshipValidator friendshipValidator = new FriendshipValidator(repoUtilizator);
         FriendshipDatabaseRepo friendshipRepo = new FriendshipDatabaseRepo(friendshipValidator, "jdbc:postgresql://localhost:5432/socialnetwork", "vasilegeorge", "parola");
+        MessagesValidator messagesValidator = new MessagesValidator();
+        MessagesDatabaseRepo messagesRepo = new MessagesDatabaseRepo(messagesValidator,"jdbc:postgresql://localhost:5432/socialnetwork", "vasilegeorge", "parola");
+
 
         utilizatorService = new UtilizatorService(repoUtilizator, utilizatorValidator);
         friendshipService = new FriendshipService(friendshipRepo, friendshipValidator);
+        messagesService = new MessagesService(messagesRepo, messagesValidator);
 
         // Crează prima fereastră de login
         createLoginWindow();
@@ -54,6 +62,7 @@ public class MainGraphicInterface extends Application {
         LoginController loginController = loader.getController();
         loginController.setUtilizatorService(utilizatorService);
         loginController.setFriendshipService(friendshipService);
+        loginController.setMessagesService(messagesService);
 
         // Creează o nouă fereastră (Stage)
         Stage stage = new Stage();

@@ -140,3 +140,19 @@
 .friends-list:empty {
     -fx-background-color: #2f353e; /* Fundal gri închis când lista este goală */
 }
+
+/* Stiluri pentru mesaje trimise de utilizator */
+.hbox-sent {
+    -fx-background-color: #d1e7dd; /* Fundal verde deschis pentru mesajele trimise */
+    -fx-padding: 5px 10px;
+    -fx-background-radius: 15px;
+    -fx-alignment: center-right;
+}
+
+/* Stiluri pentru mesaje primite */
+.hbox-received {
+    -fx-background-color: #f0f8ff; /* Fundal albastru deschis pentru mesajele primite */
+    -fx-padding: 5px 10px;
+    -fx-background-radius: 15px;
+    -fx-alignment: center-left;
+}

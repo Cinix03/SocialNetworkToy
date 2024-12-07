@@ -60,4 +60,7 @@ public interface Repository<ID, E extends Entity<ID>> {
      * if the entity is not valid.
      */
     Optional<E> update(E entity);
+
+
+    Iterable<E> findAllPaginated(int page, int size, int idCautat);
 }

@@ -28,6 +28,7 @@
         <Button fx:id="friendRequestButton" text="Friend Request" onAction="#handleFriendshipRequests" />
         <Button fx:id="requestsSentButton" text="Requests Sent" onAction="#handleRequestsSent" />
 
+
         <!-- Al doilea Region pentru a împinge elementele rămase spre dreapta -->
         <Region HBox.hgrow="ALWAYS" />
 
@@ -43,11 +44,16 @@
         <!-- ListView aliniat diferit -->
         <ListView fx:id="friendsList" prefWidth="400.0" prefHeight="300.0"
                   styleClass="friends-list"/>
+        <VBox alignment="TOP_CENTER" spacing="10">
+            <TextField alignment="TOP_CENTER" fx:id="numberPage" prefWidth="200.0" promptText="Friends on Page" />
+        </VBox>
 
         <HBox alignment="TOP_CENTER" spacing="10">
             <Button fx:id="acceptButton" text="Accept" onAction="#handleAcceptRequest" />
             <Button fx:id="declineButton" text="Decline" onAction="#handleDeclineRequest" />
             <Button fx:id="blockButton" text="Block" onAction="#handleBlockRequest" />
+            <Button fx:id="nextPageButton" text="Next Page" onAction="#handleNextPage" />
+            <Button fx:id="previousPageButton" text="Previous Page" onAction="#handlePreviousPage" />
         </HBox>
         <VBox alignment="TOP_CENTER" spacing="10">
             <Button fx:id="RemoveFriend" text="Remove Friend" onAction="#handleRemoveFriendship" />

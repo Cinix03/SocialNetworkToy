@@ -21,6 +21,7 @@
         <Region HBox.hgrow="ALWAYS"/>
         <Button fx:id="friends" text="Friends" styleClass="navbar-button" onAction="#handleFriends"/>
         <Button fx:id="logout" mnemonicParsing="false" onAction="#handleLogout" text="Logout" styleClass="navbar-button"/>
+        <Button fx:id="Profile" text="Profile" onAction="#handleProfile" styleClass="navbar-button"/>
     </HBox>
 
     <!-- Contenut central -->

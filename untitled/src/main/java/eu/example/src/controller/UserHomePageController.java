@@ -3,6 +3,7 @@ package eu.example.src.controller;
 import eu.example.src.domain.Friendship;
 import eu.example.src.domain.Utilizator;
 import eu.example.src.services.FriendshipService;
+import eu.example.src.services.MessagesService;
 import eu.example.src.services.UtilizatorService;
 import eu.example.src.ui.ErrorPopup;
 import javafx.event.ActionEvent;
@@ -24,6 +25,7 @@ public class UserHomePageController {
 
     private UtilizatorService utilizatorService;
     private FriendshipService friendshipService;
+    private MessagesService messagesService;
     private Utilizator utilizator;
 
     @FXML
@@ -84,6 +86,17 @@ public class UserHomePageController {
 
     public void setFriendshipService(FriendshipService friendshipService) {
         this.friendshipService = friendshipService;
+        friendshipService.addSpecificChangeListener(this::sendNotificationFriendRequest);
+    }
+
+    public void sendNotificationFriendRequest(Long idReceiver, String status)
+    {
+        if(idReceiver==utilizator.getId() && status.equals("pending"))
+            ErrorPopup.showInformation("Notificare", "Ai primit o cerere de prietenie!");
+    }
+
+    public void setMessagesService(MessagesService messagesService) {
+        this.messagesService = messagesService;
     }
 
 
@@ -125,7 +138,7 @@ public class UserHomePageController {
             friendship.setSender(utilizator.getId());
             friendship.setReceiver(friend.getId());
             friendshipService.add(friendship);
-            ErrorPopup.showInformation("Succes", "Utilizatorul " + friendUsername + " a fost adăugat la lista de prieteni.");
+            ErrorPopup.showInformation("Succes", "Utilizatorului " + friendUsername + " i-a fost trimisa o cerere de prietenie.");
             searchField.setText("");
         }catch (Exception e){
             ErrorPopup.showError("Eroare", e.getMessage());
@@ -149,6 +162,34 @@ public class UserHomePageController {
             friendsController.setUtilizatorService(utilizatorService);
             friendsController.setId(utilizator.getId());
             friendsController.setFriendshipService(friendshipService);
+            System.out.println(messagesService);
+            friendsController.setMessagesService(messagesService);
+
+            Stage stage = (Stage) searchField.getScene().getWindow();
+            stage.setScene(new Scene(root, 1000, 1000));
+
+        } catch (Exception e) {
+            ErrorPopup.showError("Eroare", e.getMessage());
+        }
+    }
+
+    @FXML
+    public void handleProfile(){
+        try {
+            URL fxmlLocation = getClass().getResource("/eu/example/fxml/profile.fxml");
+            if(fxmlLocation == null)
+            {
+                System.out.println("Fișierul FXML nu a fost găsit! Verifică locația.");
+                return;
+            }
+            FXMLLoader loader = new FXMLLoader(fxmlLocation);
+            Parent root = loader.load();
+
+            ProfileController profileController = loader.getController();
+            profileController.setUtilizatorService(utilizatorService);
+            profileController.setUtilizator(utilizator);
+            profileController.setFriendshipService(friendshipService);
+            profileController.setMessagesService(messagesService);
 
             Stage stage = (Stage) searchField.getScene().getWindow();
             stage.setScene(new Scene(root, 1000, 1000));
