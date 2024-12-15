@@ -41,7 +41,7 @@ public class ProfileController {
         this.utilizator = Utilizator;
         numeUser.setText(utilizator.getUsername());
         System.out.println(utilizator.getProfilePicturePath());
-        setProfileImage(utilizator.getProfilePicturePath());
+        //setProfileImage(utilizator.getProfilePicturePath());
     }
     public void setUtilizatorService(UtilizatorService UtilizatorService){
         this.utilizatorService = UtilizatorService;

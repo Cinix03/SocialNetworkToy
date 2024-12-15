@@ -30,11 +30,11 @@ public class MainGraphicInterface extends Application {
     public void start(Stage primaryStage) throws Exception {
         // Inițializarea serviciilor
         UtilizatorValidator utilizatorValidator = new UtilizatorValidator();
-        UtilizatorDatabaseRepo repoUtilizator = new UtilizatorDatabaseRepo(utilizatorValidator, "jdbc:postgresql://localhost:5432/socialnetwork", "vasilegeorge", "parola");
+        UtilizatorDatabaseRepo repoUtilizator = new UtilizatorDatabaseRepo(utilizatorValidator, "jdbc:postgresql://localhost:5432/socialnetwork", "postgres", "random");
         FriendshipValidator friendshipValidator = new FriendshipValidator(repoUtilizator);
-        FriendshipDatabaseRepo friendshipRepo = new FriendshipDatabaseRepo(friendshipValidator, "jdbc:postgresql://localhost:5432/socialnetwork", "vasilegeorge", "parola");
+        FriendshipDatabaseRepo friendshipRepo = new FriendshipDatabaseRepo(friendshipValidator, "jdbc:postgresql://localhost:5432/socialnetwork", "postgres", "random");
         MessagesValidator messagesValidator = new MessagesValidator();
-        MessagesDatabaseRepo messagesRepo = new MessagesDatabaseRepo(messagesValidator,"jdbc:postgresql://localhost:5432/socialnetwork", "vasilegeorge", "parola");
+        MessagesDatabaseRepo messagesRepo = new MessagesDatabaseRepo(messagesValidator,"jdbc:postgresql://localhost:5432/socialnetwork", "postgres", "random");
 
 
         utilizatorService = new UtilizatorService(repoUtilizator, utilizatorValidator);
