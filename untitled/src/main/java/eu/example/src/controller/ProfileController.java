@@ -21,7 +21,10 @@ import javafx.scene.image.ImageView;
 
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 
 public class ProfileController {
     @FXML
@@ -40,8 +43,12 @@ public class ProfileController {
     public void setUtilizator(Utilizator Utilizator){
         this.utilizator = Utilizator;
         numeUser.setText(utilizator.getUsername());
-        System.out.println(utilizator.getProfilePicturePath());
-        //setProfileImage(utilizator.getProfilePicturePath());
+        String filePath = "./untitled/src/main/resources/userPhotos/" + utilizator.getUsername() + ".jpg";
+        System.out.println(filePath);
+        File file = new File(filePath);
+        if(file.exists() && file.isFile()){
+            setProfileImage(filePath);
+        }
     }
     public void setUtilizatorService(UtilizatorService UtilizatorService){
         this.utilizatorService = UtilizatorService;
@@ -130,27 +137,38 @@ public class ProfileController {
     }
     private void setProfileImage(String imagePath) {
         File imageFile = new File(imagePath);
-        if (imageFile.exists()) {
             Image profileImage = new Image(imageFile.toURI().toString());
             profileImageView.setImage(profileImage);
-        } else {
-            // Imagine default dacă utilizatorul nu are o poză setată
-            profileImageView.setImage(new Image(getClass().getResourceAsStream("/Users/vasilegeorge/Desktop/SocialNetworkToy/untitled/src/main/resources/eu/example/fxml/default-profile-picture-avatar-user-avatar-icon-person-icon-head-icon-profile-picture-icons-default-anonymous-user-male-and-female-businessman-photo-placeholder-social-network-avatar-portrait-free-vector.jpg")));
-        }
     }
 
     @FXML
     private void handleSelectProfilePicture() {
-            FileChooser fileChooser = new FileChooser();
-            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.png", "*.jpeg"));
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.png", "*.jpeg"));
 
-            File selectedFile = fileChooser.showOpenDialog(profileImageView.getScene().getWindow());
+        File selectedFile = fileChooser.showOpenDialog(profileImageView.getScene().getWindow());
 
-            if (selectedFile != null) {
-                String filePath = selectedFile.getAbsolutePath();  // Calea completă a fișierului
-                // Salvează calea fișierului în baza de date
-                utilizatorService.addImagePath(utilizator, filePath);
-                setProfileImage(filePath);
+        if (selectedFile != null) {
+            String username = utilizator.getUsername();
+            String newFileName = username + ".jpg";
+            File directory = new File("./untitled/src/main/resources/userPhotos");
+            if (!directory.exists()) {
+                directory.mkdirs(); // Creează dosarul dacă nu există
             }
+            File newFile = new File(directory, newFileName);
+
+            try {
+                // Copiază imaginea selectată în noul fișier
+                Files.copy(selectedFile.toPath(), newFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+
+                // Salvează calea fișierului în baza de date
+                utilizatorService.addImagePath(utilizator, newFile.getAbsolutePath());
+                setProfileImage(newFile.getAbsolutePath());
+            } catch (IOException e) {
+                e.printStackTrace();
+                // Gestionează eroarea corespunzător
+            }
+        }
     }
+
 }
