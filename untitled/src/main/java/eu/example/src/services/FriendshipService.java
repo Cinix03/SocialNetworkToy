@@ -9,6 +9,7 @@ import eu.example.src.validators.Validator;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.BiConsumer;
 
 public class FriendshipService extends AbstractService<Tuple<Long, Long>, Friendship>{
@@ -62,6 +63,23 @@ public class FriendshipService extends AbstractService<Tuple<Long, Long>, Friend
             return false;
         return o instanceof Friendship;
     }
+
+    public Long numberOfFriends(Long idUser) {
+        // Variabilă pentru a contoriza numărul de prieteni
+        final Long[] friendCount = {0L};
+
+        // Parcurge toate înregistrările din repository
+        repo.findAll().forEach(f -> {
+            // Verifică dacă receiver sau sender este id-ul utilizatorului și dacă statusul este "accepted"
+            if ((f.getReceiver().equals(idUser) || f.getSender().equals(idUser)) && f.getStatus().equals("accepted")) {
+                friendCount[0]++; // Incrementare contor dacă condițiile sunt îndeplinite
+            }
+        });
+
+        // Returnează numărul total de prieteni
+        return friendCount[0];
+    }
+
 
     public int nrComunitati(int cati, Iterable<Utilizator> all) {
         //create an iterable for all ids from user

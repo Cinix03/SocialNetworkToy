@@ -156,3 +156,31 @@
     -fx-background-radius: 15px;
     -fx-alignment: center-left;
 }
+
+/* Containerul HBox 'content' */
+.profile-container {
+    -fx-padding: 20px; /* Adăugăm padding pentru a lăsa spațiu între conținut și margini */
+    -fx-alignment: CENTER-LEFT; /* Aliniem elementele la centru */
+    -fx-spacing: 200px; /* Distanță între elemente */
+    -fx-border-radius: 10px; /* Colțuri rotunjite pentru container */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 4, 0.0, 0, 0); /* Umbră subtilă */
+}
+
+/* Stilul pentru imaginea de profil */
+.profile-image {
+    -fx-border-radius: 50%; /* Colțuri perfect rotunjite pentru imagine */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 8, 0.0, 2, 2); /* Umbra subtilă pentru imagine */
+    -fx-border: 2px solid white; /* Bordură albă pentru a scoate imaginea în evidență */
+    -fx-background-color: white; /* Fundal alb pentru a face imaginea să arate clar */
+}
+
+/* Eticheta pentru numărul de prieteni */
+.friends-count {
+    -fx-font-size: 50px; /* Mărimea fontului pentru a fi concisă */
+    -fx-text-fill: #e3dcdc; /* Culoare gri închis pentru text */
+    -fx-font-weight: bold; /* Font îngroșat pentru textul numărului de prieteni */
+    -fx-padding: 8px 16px; /* Padding pentru a crea spațiu în jurul textului */
+    /*-fx-background-color: rgba(196, 186, 186, 0.1); /* Fundal semi-transparent */
+    -fx-border-radius: 20px; /* Colțuri rotunjite pentru etichetă */
+    -fx-alignment: CENTER; /* Aliniere centrală a textului */
+}

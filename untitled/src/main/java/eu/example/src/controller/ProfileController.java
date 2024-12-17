@@ -13,6 +13,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import eu.example.src.controller.UserHomePageController;
@@ -28,6 +29,10 @@ import java.nio.file.StandardCopyOption;
 
 public class ProfileController {
     @FXML
+    private Button uploadButton;
+    @FXML
+    private Label friendsCountLabel;
+    @FXML
     private ImageView profileImageView;
     @FXML
     private Label numeUser;
@@ -40,6 +45,12 @@ public class ProfileController {
     public ProfileController(){
 
     }
+
+    public void initialize(){
+        Circle c1 = new Circle(150, 150, 150);
+        profileImageView.setClip(c1);
+    }
+
     public void setUtilizator(Utilizator Utilizator){
         this.utilizator = Utilizator;
         numeUser.setText(utilizator.getUsername());
@@ -49,6 +60,10 @@ public class ProfileController {
         if(file.exists() && file.isFile()){
             setProfileImage(filePath);
         }
+        else
+        {
+            uploadButton.setDisable(false);
+        }
     }
     public void setUtilizatorService(UtilizatorService UtilizatorService){
         this.utilizatorService = UtilizatorService;
@@ -56,6 +71,7 @@ public class ProfileController {
 
     public void setFriendshipService(FriendshipService FriendshipService){
         this.friendshipService = FriendshipService;
+        friendsCountLabel.setText("     " + friendshipService.numberOfFriends(utilizator.getId()) + "\nFriends");
     }
 
     public void setMessagesService(MessagesService MessagesService){
@@ -136,6 +152,7 @@ public class ProfileController {
         }
     }
     private void setProfileImage(String imagePath) {
+        uploadButton.setVisible(false);
         File imageFile = new File(imagePath);
             Image profileImage = new Image(imageFile.toURI().toString());
             profileImageView.setImage(profileImage);
@@ -164,6 +181,7 @@ public class ProfileController {
                 // Salvează calea fișierului în baza de date
                 utilizatorService.addImagePath(utilizator, newFile.getAbsolutePath());
                 setProfileImage(newFile.getAbsolutePath());
+                uploadButton.setVisible(false);
             } catch (IOException e) {
                 e.printStackTrace();
                 // Gestionează eroarea corespunzător
