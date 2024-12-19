@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.image.ImageView?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            stylesheets="@/eu/example/fxml/Styles.css"
+            styleClass="AnchorUserHome"
+            fx:controller="eu.example.src.controller.OtherProfileController"
+            prefHeight="400.0" prefWidth="600.0">
+            <VBox fx:id="all" spacing="25" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0">
+                <HBox fx:id="navbar" alignment="CENTER_LEFT" spacing="20" styleClass="navbar"
+                      AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <Label fx:id="numeUser" text="NumeUser" styleClass="navbar-title"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Button fx:id="findPeople" text="Back" onAction="#handleFindPeople" styleClass="navbar-button"/>
+                </HBox>
+                <HBox fx:id="optiuni" alignment="CENTER" spacing="20">
+                    <Button fx:id="openChat" text="Open Chat" onAction="#openChatWindow"/>
+                </HBox>
+                <HBox fx:id="content" alignment="BOTTOM_LEFT" spacing="20" styleClass="profile-container">
+                    <ImageView fx:id="profileImageView" fitWidth="300.0" fitHeight="300.0" styleClass="profile-image"   />
+                    <Label fx:id="friendsCountLabel" text="0 \nFriends" styleClass="friends-count"/>
+                </HBox>
+            </VBox>
+</AnchorPane>

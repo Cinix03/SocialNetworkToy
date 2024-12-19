@@ -198,4 +198,34 @@ public class UserHomePageController {
             ErrorPopup.showError("Eroare", e.getMessage());
         }
     }
+    @FXML
+    public void handleShowProfile(){
+        try {
+            URL fxmlLocation = getClass().getResource("/eu/example/fxml/otherprofile.fxml");
+            if(fxmlLocation == null)
+            {
+                System.out.println("Fișierul FXML nu a fost găsit! Verifică locația.");
+                return;
+            }
+            FXMLLoader loader = new FXMLLoader(fxmlLocation);
+            Parent root = loader.load();
+
+            String usr = searchField.getText();
+            Utilizator cautat = utilizatorService.findByUsername(usr);
+            System.out.println(cautat.getId());
+
+            OtherProfileController profileController = loader.getController();
+            profileController.setUtilizatorCurent(cautat);
+            profileController.setFriendshipService(friendshipService);
+            profileController.setUtilizatorService(utilizatorService);
+            profileController.setUtilizator(utilizator);
+            profileController.setMessagesService(messagesService);
+
+            Stage stage = (Stage) searchField.getScene().getWindow();
+            stage.setScene(new Scene(root, 1000, 1000));
+
+        } catch (Exception e) {
+            ErrorPopup.showError("Eroare", e.getMessage());
+        }
+    }
 }

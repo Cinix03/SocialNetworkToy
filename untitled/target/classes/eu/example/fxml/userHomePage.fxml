@@ -32,6 +32,7 @@
         <TextField fx:id="searchField" styleClass="text-fieldLogin" prefWidth="200.0" maxWidth="200.0" promptText="Căutare utilizator..."/>
         <ListView fx:id="suggestionsListView" prefWidth="200.0" prefHeight="150.0"/>
         <Button fx:id="addFriend" mnemonicParsing="false" onAction="#handleAddFriend" prefHeight="25.0" prefWidth="200.0" text="Adaugă prieten"/>
+        <Button fx:id="showProfile" mnemonicParsing="false" onAction="#handleShowProfile" prefHeight="25.0" prefWidth="200.0" text="Arata profil"/>
     </VBox>
 
 </AnchorPane>
