@@ -68,7 +68,6 @@ public class FriendsController {
         numberPage.textProperty().addListener((observable, oldValue, newValue) -> {
             pageSize = Integer.parseInt(newValue);
             pageNumber = 1;
-            numberPage.setText("1");
             initModel();
         });
 

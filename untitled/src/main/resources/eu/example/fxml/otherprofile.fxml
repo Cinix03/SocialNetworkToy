@@ -20,12 +20,16 @@
                     <Region HBox.hgrow="ALWAYS"/>
                     <Button fx:id="findPeople" text="Back" onAction="#handleFindPeople" styleClass="navbar-button"/>
                 </HBox>
-                <HBox fx:id="optiuni" alignment="CENTER" spacing="20">
-                    <Button fx:id="openChat" text="Open Chat" onAction="#openChatWindow"/>
-                </HBox>
                 <HBox fx:id="content" alignment="BOTTOM_LEFT" spacing="20" styleClass="profile-container">
                     <ImageView fx:id="profileImageView" fitWidth="300.0" fitHeight="300.0" styleClass="profile-image"   />
-                    <Label fx:id="friendsCountLabel" text="0 \nFriends" styleClass="friends-count"/>
+                    <VBox fx:id="optiuni" alignment="CENTER" spacing="20">
+                        <Label fx:id="friendsCountLabel" text="0 \nFriends" styleClass="friends-count"/>
+                            <HBox fx:id="doFriend" alignment="CENTER" spacing="20">
+                            <Button fx:id="openChat" text="Open Chat" onAction="#openChatWindow"/>
+                            <Button fx:id="addFriend" text="Add Friend" onAction="#handleAddFriend"/>
+                            <Button fx:id="removeFriend" text="Remove Friend" onAction="#handleRemoveFriend"/>
+                        </HBox>
+                    </VBox>
                 </HBox>
             </VBox>
 </AnchorPane>

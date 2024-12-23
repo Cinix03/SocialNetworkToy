@@ -1,5 +1,7 @@
 package eu.example.src.controller;
 
+import eu.example.src.domain.Friendship;
+import eu.example.src.domain.Tuple;
 import eu.example.src.domain.Utilizator;
 import eu.example.src.services.FriendshipService;
 import eu.example.src.services.MessagesService;
@@ -19,6 +21,8 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.net.URL;
 
+import static java.util.Collections.min;
+
 public class OtherProfileController {
 
     @FXML
@@ -29,6 +33,12 @@ public class OtherProfileController {
 
     @FXML
     private Label numeUser;
+
+    @FXML
+    private Button addFriend;
+
+    @FXML
+    private Button removeFriend;
 
     @FXML
     private Button logout;
@@ -75,10 +85,19 @@ public class OtherProfileController {
 
      public void setMessagesService(MessagesService messagesService) {
          this.messagesService = messagesService;
+         refreshState();
      }
 
      public void setFriendshipService(FriendshipService friendshipService) {
          this.friendshipService = friendshipService;
+         friendshipService.addChangeListener(this::refreshState);
+     }
+
+     public void refreshState(){
+         Tuple<Long, Long> t= new Tuple<>(Math.min(utilizator.getId(), utilizatorCurent.getId()), Math.max(utilizator.getId(), utilizatorCurent.getId()));
+         System.out.println(friendshipService.findOne(t).isPresent());
+         removeFriend.setVisible(friendshipService.findOne(t).isPresent() && friendshipService.findOne(t).get().getStatus().equals("accepted"));
+         addFriend.setVisible(friendshipService.findOne(t).isEmpty());
      }
 
      private void setProfileImage(String filePath) {
@@ -138,4 +157,28 @@ public class OtherProfileController {
             ErrorPopup.showError("Eroare", "Nu s-a putut deschide fereastra de chat: " + e.getMessage());
         }
     }
+    @FXML
+    public void handleRemoveFriend() {
+        Friendship f = new Friendship(5L, 2L);
+        if(utilizator.getId()<utilizatorCurent.getId())
+            f.setId(new Tuple<>(utilizator.getId(), utilizatorCurent.getId()));
+        else
+            f.setId(new Tuple<>(utilizatorCurent.getId(), utilizator.getId()));
+
+        try {
+            friendshipService.findOne(f.getId()).ifPresent(prietenie -> {
+                if(prietenie.getStatus().equals("accepted")) {
+                    friendshipService.delete(f);
+                    refreshState();
+                }
+            });
+        }catch (Exception e){
+            ErrorPopup.showError("Eroare", e.getMessage());
+        }
+    }
+
+    @FXML
+    public void handleAddFriend(){
+
+     }
 }
