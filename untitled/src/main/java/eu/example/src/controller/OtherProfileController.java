@@ -7,12 +7,14 @@ import eu.example.src.services.FriendshipService;
 import eu.example.src.services.MessagesService;
 import eu.example.src.services.UtilizatorService;
 import eu.example.src.ui.ErrorPopup;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Circle;
@@ -24,6 +26,18 @@ import java.net.URL;
 import static java.util.Collections.min;
 
 public class OtherProfileController {
+
+    @FXML
+    public Button acceptFriend;
+
+    @FXML
+    public Button declineFriend;
+
+    @FXML
+    private Label statusPen;
+
+    @FXML
+    private ProgressIndicator progressIndicator;
 
     @FXML
     private Label friendsCountLabel;
@@ -98,6 +112,25 @@ public class OtherProfileController {
          System.out.println(friendshipService.findOne(t).isPresent());
          removeFriend.setVisible(friendshipService.findOne(t).isPresent() && friendshipService.findOne(t).get().getStatus().equals("accepted"));
          addFriend.setVisible(friendshipService.findOne(t).isEmpty());
+         friendsCountLabel.setText("     " + friendshipService.numberOfFriends(utilizatorCurent.getId()) + "\nFriends");
+         if(friendshipService.findOne(t).isPresent() && friendshipService.findOne(t).get().getStatus().equals("pending")){
+             progressIndicator.setVisible(true);
+             statusPen.setVisible(true);
+             if(friendshipService.findOne(t).get().getReceiver().equals(utilizator.getId())){
+                 acceptFriend.setVisible(true);
+                 declineFriend.setVisible(true);
+             }
+             else {
+                 acceptFriend.setVisible(false);
+                 declineFriend.setVisible(false);
+             }
+         }
+         else{
+             progressIndicator.setVisible(false);
+             statusPen.setVisible(false);
+             acceptFriend.setVisible(false);
+             declineFriend.setVisible(false);
+         }
      }
 
      private void setProfileImage(String filePath) {
@@ -158,7 +191,7 @@ public class OtherProfileController {
         }
     }
     @FXML
-    public void handleRemoveFriend() {
+    public Friendship handleRemoveFriend() {
         Friendship f = new Friendship(5L, 2L);
         if(utilizator.getId()<utilizatorCurent.getId())
             f.setId(new Tuple<>(utilizator.getId(), utilizatorCurent.getId()));
@@ -167,7 +200,7 @@ public class OtherProfileController {
 
         try {
             friendshipService.findOne(f.getId()).ifPresent(prietenie -> {
-                if(prietenie.getStatus().equals("accepted")) {
+                if(prietenie.getStatus().equals("accepted") || prietenie.getStatus().equals("pending")) {
                     friendshipService.delete(f);
                     refreshState();
                 }
@@ -175,10 +208,44 @@ public class OtherProfileController {
         }catch (Exception e){
             ErrorPopup.showError("Eroare", e.getMessage());
         }
+        if(f.getId().equals(new Tuple<>(5L, 2L)))
+            return null;
+        return f;
     }
 
     @FXML
     public void handleAddFriend(){
-
+         Friendship f = new Friendship(2L, 3L);
+         if(utilizator.getId()<utilizatorCurent.getId())
+             f.setId(new Tuple<>(utilizator.getId(), utilizatorCurent.getId()));
+         else
+             f.setId(new Tuple<>(utilizatorCurent.getId(), utilizator.getId()));
+         f.setStatus("pending");
+         f.setSender(utilizator.getId());
+         f.setReceiver(utilizatorCurent.getId());
+         try{
+             friendshipService.add(f);
+             refreshState();
+         }catch (Exception e){
+             ErrorPopup.showError("Eroare", e.getMessage());
+         }
      }
+
+    @FXML
+    private void handleAcceptFriend() {
+         try {
+             Friendship f = handleRemoveFriend();
+             f.setStatus("accepted");
+             f.setSender(utilizatorCurent.getId());
+             f.setReceiver(utilizator.getId());
+             friendshipService.add(f);
+         }catch (Exception e){
+             ErrorPopup.showError("Eroare", e.getMessage());
+         }
+    }
+
+    @FXML
+    public void handleDeclineFriend() {
+         handleRemoveFriend();
+    }
 }

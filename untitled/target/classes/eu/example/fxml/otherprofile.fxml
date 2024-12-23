@@ -5,6 +5,8 @@
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.layout.VBox?>
 
 <?import javafx.scene.image.ImageView?>
 <AnchorPane xmlns="http://javafx.com/javafx"
@@ -26,9 +28,16 @@
                         <Label fx:id="friendsCountLabel" text="0 \nFriends" styleClass="friends-count"/>
                             <HBox fx:id="doFriend" alignment="CENTER" spacing="20">
                             <Button fx:id="openChat" text="Open Chat" onAction="#openChatWindow"/>
-                            <Button fx:id="addFriend" text="Add Friend"/>
+                            <Button fx:id="addFriend" text="Add Friend" onAction="#handleAddFriend"/>
                             <Button fx:id="removeFriend" text="Remove Friend" onAction="#handleRemoveFriend"/>
-                        </HBox>
+                            </HBox>
+                            <VBox spacing="10.0" alignment="CENTER" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+                                <ProgressIndicator fx:id="progressIndicator"/>
+                                <Label fx:id="statusPen" text="Pending..." styleClass="friends-count"/>
+                                <Button fx:id="acceptFriend" text="Accept" onAction="#handleAcceptFriend"/>
+                                <Button fx:id="declineFriend" text="Decline" onAction="#handleDeclineFriend"/>
+                            </VBox>
+
                     </VBox>
                 </HBox>
             </VBox>

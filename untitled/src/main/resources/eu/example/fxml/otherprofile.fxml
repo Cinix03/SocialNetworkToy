@@ -31,7 +31,13 @@
                             <Button fx:id="addFriend" text="Add Friend" onAction="#handleAddFriend"/>
                             <Button fx:id="removeFriend" text="Remove Friend" onAction="#handleRemoveFriend"/>
                             </HBox>
-                            <VBox spacing="10.0" alignment="CENTER" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1"> <ProgressIndicator fx:id="progressIndicator" progress="-1.0"/> </VBox>
+                            <VBox spacing="10.0" alignment="CENTER" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+                                <ProgressIndicator fx:id="progressIndicator"/>
+                                <Label fx:id="statusPen" text="Pending..." styleClass="friends-count"/>
+                                <Button fx:id="acceptFriend" text="Accept" onAction="#handleAcceptFriend"/>
+                                <Button fx:id="declineFriend" text="Decline" onAction="#handleDeclineFriend"/>
+                            </VBox>
+
                     </VBox>
                 </HBox>
             </VBox>
