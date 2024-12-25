@@ -15,7 +15,7 @@
             styleClass="AnchorUserHome"
             fx:controller="eu.example.src.controller.OtherProfileController"
             prefHeight="400.0" prefWidth="600.0">
-            <VBox fx:id="all" spacing="25" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0">
+            <VBox fx:id="all" spacing="5" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0">
                 <HBox fx:id="navbar" alignment="CENTER_LEFT" spacing="20" styleClass="navbar"
                       AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <Label fx:id="numeUser" text="NumeUser" styleClass="navbar-title"/>
@@ -23,7 +23,9 @@
                     <Button fx:id="findPeople" text="Back" onAction="#handleFindPeople" styleClass="navbar-button"/>
                 </HBox>
                 <HBox fx:id="content" alignment="BOTTOM_LEFT" spacing="20" styleClass="profile-container">
-                    <ImageView fx:id="profileImageView" fitWidth="300.0" fitHeight="300.0" styleClass="profile-image"   />
+                    <VBox>
+                    <ImageView fx:id="profileImageView" fitWidth="300.0" fitHeight="300.0" styleClass="profile-image"/>
+                    </VBox>
                     <VBox fx:id="optiuni" alignment="CENTER" spacing="20">
                         <Label fx:id="friendsCountLabel" text="0 \nFriends" styleClass="friends-count"/>
                             <HBox fx:id="doFriend" alignment="CENTER" spacing="20">
