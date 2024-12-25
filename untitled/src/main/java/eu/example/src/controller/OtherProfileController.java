@@ -28,10 +28,13 @@ import static java.util.Collections.min;
 public class OtherProfileController {
 
     @FXML
-    public Button acceptFriend;
+    private Button acceptFriend;
 
     @FXML
-    public Button declineFriend;
+    private Button declineFriend;
+
+    @FXML
+    private Button openChat;
 
     @FXML
     private Label statusPen;
@@ -116,6 +119,7 @@ public class OtherProfileController {
          if(friendshipService.findOne(t).isPresent() && friendshipService.findOne(t).get().getStatus().equals("pending")){
              progressIndicator.setVisible(true);
              statusPen.setVisible(true);
+             openChat.setVisible(false);
              if(friendshipService.findOne(t).get().getReceiver().equals(utilizator.getId())){
                  acceptFriend.setVisible(true);
                  declineFriend.setVisible(true);
@@ -126,10 +130,19 @@ public class OtherProfileController {
              }
          }
          else{
+             openChat.setVisible(friendshipService.findOne(t).isPresent());
              progressIndicator.setVisible(false);
              statusPen.setVisible(false);
              acceptFriend.setVisible(false);
              declineFriend.setVisible(false);
+         }
+
+         if(utilizator == utilizatorCurent){
+             progressIndicator.setVisible(false);
+             statusPen.setVisible(false);
+             acceptFriend.setVisible(false);
+             declineFriend.setVisible(false);
+             openChat.setVisible(false);
          }
      }
 
