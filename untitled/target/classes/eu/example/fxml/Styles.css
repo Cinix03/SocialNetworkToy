@@ -170,7 +170,7 @@
 .profile-image {
     -fx-border-radius: 50%; /* Colțuri perfect rotunjite pentru imagine */
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 8, 0.0, 2, 2); /* Umbra subtilă pentru imagine */
-    -fx-border: 2px solid white; /* Bordură albă pentru a scoate imaginea în evidență */
+    /*-fx-border: 2px solid white; /* Bordură albă pentru a scoate imaginea în evidență */
     -fx-background-color: white; /* Fundal alb pentru a face imaginea să arate clar */
 }
 
