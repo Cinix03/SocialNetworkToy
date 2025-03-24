@@ -212,7 +212,8 @@ public class UserHomePageController {
 
             String usr = searchField.getText();
             Utilizator cautat = utilizatorService.findByUsername(usr);
-            System.out.println(cautat.getId());
+            System.out.println("Cautatul are: " + cautat.getId());
+            System.out.println("Actualul are: " + cautat.getUsername());
 
             OtherProfileController profileController = loader.getController();
             profileController.setUtilizatorCurent(cautat);
@@ -226,6 +227,8 @@ public class UserHomePageController {
 
         } catch (Exception e) {
             ErrorPopup.showError("Eroare", e.getMessage());
+            System.out.println(e.getMessage());
+
         }
     }
 }

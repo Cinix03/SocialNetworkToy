@@ -61,6 +61,8 @@ public interface Repository<ID, E extends Entity<ID>> {
      */
     Optional<E> update(E entity);
 
+    Optional<E> findByUsernameDB(String username);
+
 
     Iterable<E> findAllPaginated(int page, int size, int idCautat);
 }

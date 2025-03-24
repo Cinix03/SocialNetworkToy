@@ -1,15 +1,11 @@
 package eu.example.src.services;
 
-import eu.example.src.domain.Friendship;
-import eu.example.src.domain.Tuple;
 import eu.example.src.domain.Utilizator;
-import eu.example.src.repository.Repository;
 import eu.example.src.repository.database.UtilizatorDatabaseRepo;
-import eu.example.src.repository.file.FriendshipRepository;
 import eu.example.src.validators.Validator;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class UtilizatorService extends AbstractService<Long, Utilizator> {
     public UtilizatorService(UtilizatorDatabaseRepo repo, Validator<Utilizator> validator) {
@@ -22,6 +18,10 @@ public class UtilizatorService extends AbstractService<Long, Utilizator> {
                 return u;
         }
         throw new IllegalArgumentException("Utilizatorul nu exista");
+    }
+
+    public Optional<Utilizator> findByUsernameDB(String username){
+        return repo.findByUsernameDB(username);
     }
 
 

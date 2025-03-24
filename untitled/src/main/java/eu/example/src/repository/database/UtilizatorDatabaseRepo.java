@@ -6,6 +6,7 @@ import eu.example.src.validators.Validator;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Optional;
 
 public class UtilizatorDatabaseRepo extends AbstractDatabaseRepository<Long, Utilizator> {
 
@@ -34,6 +35,33 @@ public class UtilizatorDatabaseRepo extends AbstractDatabaseRepository<Long, Uti
         } catch (SQLException e) {
             throw new RuntimeException("Could not create entity from result set", e);
         }
+    }
+
+
+    public Optional<Utilizator> findByUsernameDB(String username) {
+        try{
+            String query = "SELECT * FROM users WHERE username = ?";
+            System.out.println(query);
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, username);
+            System.out.println(preparedStatement);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while(resultSet.next()) {
+                Long id = resultSet.getLong("id");
+                String firstName = resultSet.getString("first_name");
+                String lastName = resultSet.getString("last_name");
+                String usernameUser = resultSet.getString("username");
+                String passwordUser = resultSet.getString("password");
+                String profilePicturePath = resultSet.getString("profileimagepath");
+                Utilizator utilizator = new Utilizator(firstName, lastName, usernameUser, passwordUser);
+                utilizator.setId(id);
+                utilizator.setProfilePicturePath(profilePicturePath);
+                return Optional.of(utilizator);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
     }
 
     @Override

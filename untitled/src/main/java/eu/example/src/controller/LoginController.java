@@ -85,7 +85,7 @@ public class LoginController {
     @FXML
     public void handleLogin() {
         try {
-            Utilizator utilizator = utilizatorService.findByUsername(username.getText());
+            Utilizator utilizator = utilizatorService.findByUsernameDB(username.getText()).get();
             if(checkPassword(password.getText(), utilizator.getPassword()) == false)
                 throw new RuntimeException("Parola gresita");
             System.out.println("Logat cu succes");
@@ -101,6 +101,7 @@ public class LoginController {
             userHomePageController.setUtilizatorService(utilizatorService);
             userHomePageController.setFriendshipService(friendshipService);
             userHomePageController.setMessagesService(messagesService);
+            System.out.println("In login userul are: " + utilizator.getId());
             userHomePageController.setUtilizator(utilizator);
 
             Stage stage = (Stage) login.getScene().getWindow();

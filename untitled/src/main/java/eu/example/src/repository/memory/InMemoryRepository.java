@@ -75,6 +75,11 @@ public class InMemoryRepository<ID, E extends Entity<ID>> implements Repository<
     }
 
     @Override
+    public Optional<E> findByUsernameDB(String username) {
+        return Optional.empty();
+    }
+
+    @Override
     public Iterable<E> findAllPaginated(int page, int size, int idCautat) {
         return null;
     }
